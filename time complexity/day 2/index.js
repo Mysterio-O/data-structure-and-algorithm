@@ -205,35 +205,70 @@
 // Count subtotal
 
 const cartItems = [
-  { id: "p-001", name: "Daraz Laptop Bag", price: 1500, quantity: 1 },
-  { id: "p-002", name: "Walton USB-C Cable", price: 350, quantity: 2 },
-  { id: "p-003", name: "Aarong Kurta", price: 2200, quantity: 1 },
+    { id: "p-001", name: "Daraz Laptop Bag", price: 1500, quantity: 1 },
+    { id: "p-002", name: "Walton USB-C Cable", price: 350, quantity: 2 },
+    { id: "p-003", name: "Aarong Kurta", price: 2200, quantity: 1 },
 ];
 
-const total = cartItems.reduce((subtotal,car)=> {
+const total = cartItems.reduce((subtotal, car) => {
     // console.log(subtotal,car);
     return subtotal + (car.price * car.quantity);
-},0);
+}, 0);
 
 // console.log(total);
 
 // Find best scorer
 
-const players = [
-  { name: "Jamal Bhuyan", score: 88 },
-  { name: "Shekh Morsalin", score: 81 },
-  { name: "Rakib Hossain", score: 95 },
-  { name: "Topu Barman", score: 91 },
-  { name: "Sohel Rana", score: 72 },
+// const players = [
+//   { name: "Jamal Bhuyan", score: 88 },
+//   { name: "Shekh Morsalin", score: 81 },
+//   { name: "Rakib Hossain", score: 95 },
+//   { name: "Topu Barman", score: 91 },
+//   { name: "Sohel Rana", score: 72 },
+// ];
+
+// const best = players.reduce((bestPlayer,player)=> {
+//     // console.log(bestPlayer,player);
+//     if(bestPlayer.score > player.score){
+//         return bestPlayer;
+//     }else{
+//         return player;
+//     }
+// },{name:'',score:0});
+
+// console.log(best);
+
+
+
+//* Generate a lookup table
+
+//? Input
+const postsArray = [
+    { id: "p-101", title: "Intro to SQL", author: "Alex" },
+    { id: "p-102", title: "Data Structures in JS", author: "Beth" },
+    { id: "p-103", title: "Understanding Reduce", author: "Chris" },
+    { id: "p-104", title: "CSS Grid Tricks", author: "Alex" },
 ];
 
-const best = players.reduce((bestPlayer,player)=> {
-    // console.log(bestPlayer,player);
-    if(bestPlayer.score > player.score){
-        return bestPlayer;
-    }else{
-        return player;
-    }
-},{name:'',score:0});
+//? Output
+// {
+//   "p-101": { "id": "p-101", "title": "Intro to SQL", "author": "Alex" },
+//   "p-102": { "id": "p-102", "title": "Data Structures in JS", "author": "Beth" },
+//   "p-103": { "id": "p-103", "title": "Understanding Reduce", "author": "Chris" },
+//   "p-104": { "id": "p-104", "title": "CSS Grid Tricks", "author": "Alex" }
+// }
 
-console.log(best);
+
+const result = postsArray.reduce((final, obj) => {
+    // console.log(final,obj);
+    final[obj.id] = obj;
+    return final
+}, {});
+console.log(result);
+
+let finalArr = [];
+for (const r in result) {
+    console.log(r);
+    finalArr = [...finalArr, result[r]];
+}
+console.log(finalArr)
