@@ -324,42 +324,96 @@ const total = cartItems.reduce((subtotal, car) => {
 // Scenario: You have a flat array of sales data, and you need to group the sales by category,
 // calculating the total revenue and the number of items sold for each.
 
-const sales = [
-    { category: "Electronics", item: "Laptop", price: 1200, quantity: 1 },
-    { category: "Books", item: "JS Basics", price: 30, quantity: 2 },
-    { category: "Electronics", item: "Mouse", price: 25, quantity: 2 },
-    { category: "Home", item: "Chair", price: 150, quantity: 1 },
-    { category: "Books", item: "React Deep Dive", price: 50, quantity: 1 },
-    { category: "Electronics", item: "Keyboard", price: 80, quantity: 1 },
+// const sales = [
+//     { category: "Electronics", item: "Laptop", price: 1200, quantity: 1 },
+//     { category: "Books", item: "JS Basics", price: 30, quantity: 2 },
+//     { category: "Electronics", item: "Mouse", price: 25, quantity: 2 },
+//     { category: "Home", item: "Chair", price: 150, quantity: 1 },
+//     { category: "Books", item: "React Deep Dive", price: 50, quantity: 1 },
+//     { category: "Electronics", item: "Keyboard", price: 80, quantity: 1 },
+// ];
+
+// //? Output
+// // {
+// //   Electronics: {
+// //     totalRevenue: 1330,
+// //     itemCount: 4,
+// //   },
+// //   Books: {
+// //     totalRevenue: 110,
+// //     itemCount: 3,
+// //   },
+// //   Home: {
+// //     totalRevenue: 150,
+// //     itemCount: 1,
+// //   },
+// // };
+
+// const salesOutput = sales.reduce((table, sale) => {
+//     const { category, price, quantity } = sale;
+//     console.log(table,sale)
+//     if (!table[category]) {
+//         table[category] = {
+//             totalRevenue: 0,
+//             itemCount: 0
+//         }
+//     }
+
+//     table[category].totalRevenue += price * quantity;
+//     table[category].itemCount += quantity
+//     return table
+// }, {})
+
+
+
+//* Denormalizing Data (Client-Side "Join")
+
+// Scenario: You have an array of users and a separate array of posts.
+// You want to create a new array of users where each user object contains a posts array of their own posts.
+
+//? input
+const users = [
+    { id: 101, name: "Alice" },
+    { id: 102, name: "Bob" },
+    { id: 103, name: "Charlie" },
 ];
 
-//? Output
-// {
-//   Electronics: {
-//     totalRevenue: 1330,
-//     itemCount: 4,
-//   },
-//   Books: {
-//     totalRevenue: 110,
-//     itemCount: 3,
-//   },
-//   Home: {
-//     totalRevenue: 150,
-//     itemCount: 1,
-//   },
-// };
+const posts = [
+    { id: 1, userId: 102, title: "My first post" },
+    { id: 2, userId: 101, title: "React Hooks" },
+    { id: 3, userId: 101, title: "Data Structures" },
+    { id: 4, userId: 103, title: "CSS is fun" },
+    { id: 5, userId: 102, title: "Node.js streams" },
+];
 
-const salesOutput = sales.reduce((table, sale) => {
-    const { category, price, quantity } = sale;
-    console.log(table,sale)
-    if (!table[category]) {
-        table[category] = {
-            totalRevenue: 0,
-            itemCount: 0
-        }
+//? output
+// [
+//   { id: 101, name: 'Alice', posts: [ { id: 2, ... }, { id: 3, ... } ] },
+//   { id: 102, name: 'Bob', posts: [ { id: 1, ... }, { id: 5, ... } ] },
+//   { id: 103, name: 'Charlie', posts: [ { id: 4, ... } ] }
+// ]
+
+const postByIds = posts.reduce((table, post) => {
+    // console.log(table, post);
+    const { userId } = post;
+
+    if (!table[userId]) {
+        table[userId] = [];
     }
 
-    table[category].totalRevenue += price * quantity;
-    table[category].itemCount += quantity
+    table[userId].push(post);
+
     return table
-}, {})
+}, {});
+
+const usersWithPosts = users.map(user => {
+    return {
+        ...user,
+        posts: postByIds[user.id] || []
+    }
+})
+
+// console.log(postByIds)
+
+// console.log(usersWithPosts)
+console.log(JSON.stringify(usersWithPosts));
