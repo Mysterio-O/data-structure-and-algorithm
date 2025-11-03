@@ -371,49 +371,103 @@ const total = cartItems.reduce((subtotal, car) => {
 // Scenario: You have an array of users and a separate array of posts.
 // You want to create a new array of users where each user object contains a posts array of their own posts.
 
-//? input
-const users = [
-    { id: 101, name: "Alice" },
-    { id: 102, name: "Bob" },
-    { id: 103, name: "Charlie" },
+// //? input
+// const users = [
+//     { id: 101, name: "Alice" },
+//     { id: 102, name: "Bob" },
+//     { id: 103, name: "Charlie" },
+// ];
+
+// const posts = [
+//     { id: 1, userId: 102, title: "My first post" },
+//     { id: 2, userId: 101, title: "React Hooks" },
+//     { id: 3, userId: 101, title: "Data Structures" },
+//     { id: 4, userId: 103, title: "CSS is fun" },
+//     { id: 5, userId: 102, title: "Node.js streams" },
+// ];
+
+// //? output
+// // [
+// //   { id: 101, name: 'Alice', posts: [ { id: 2, ... }, { id: 3, ... } ] },
+// //   { id: 102, name: 'Bob', posts: [ { id: 1, ... }, { id: 5, ... } ] },
+// //   { id: 103, name: 'Charlie', posts: [ { id: 4, ... } ] }
+// // ]
+
+// const postByIds = posts.reduce((table, post) => {
+//     // console.log(table, post);
+//     const { userId } = post;
+
+//     if (!table[userId]) {
+//         table[userId] = [];
+//     }
+
+//     table[userId].push(post);
+
+//     return table
+// }, {});
+
+// const usersWithPosts = users.map(user => {
+//     return {
+//         ...user,
+//         posts: postByIds[user.id] || []
+//     }
+// })
+
+// // console.log(postByIds)
+
+// // console.log(usersWithPosts)
+// console.log(JSON.stringify(usersWithPosts));
+
+
+
+//* Binning (Resampling) Time Series Data
+
+// Scenario: You have a long list of user click events.
+// You need to "bin" these events into 30-minute intervals and count them to see engagement over time.
+
+//? Input
+const events = [
+    { timestamp: "2025-10-22T10:01:00Z", type: "click" },
+    { timestamp: "2025-10-22T10:05:00Z", type: "scroll" },
+    { timestamp: "2025-10-22T10:14:00Z", type: "click" },
+    { timestamp: "2025-10-22T10:31:00Z", type: "click" },
+    { timestamp: "2025-10-22T10:45:00Z", type: "scroll" },
+    { timestamp: "2025-10-22T11:02:00Z", type: "click" },
 ];
 
-const posts = [
-    { id: 1, userId: 102, title: "My first post" },
-    { id: 2, userId: 101, title: "React Hooks" },
-    { id: 3, userId: 101, title: "Data Structures" },
-    { id: 4, userId: 103, title: "CSS is fun" },
-    { id: 5, userId: 102, title: "Node.js streams" },
-];
+//? Output
+// binnedEvents = {
+//   "2025-10-22T10:00:00.000Z": { "total": 3 },
+//   "2025-10-22T10:30:00.000Z": { "total": 2 },
+//   "2025-10-22T11:00:00.000Z": { "total": 1 }
+// }
 
-//? output
-// [
-//   { id: 101, name: 'Alice', posts: [ { id: 2, ... }, { id: 3, ... } ] },
-//   { id: 102, name: 'Bob', posts: [ { id: 1, ... }, { id: 5, ... } ] },
-//   { id: 103, name: 'Charlie', posts: [ { id: 4, ... } ] }
-// ]
 
-const postByIds = posts.reduce((table, post) => {
-    // console.log(table, post);
-    const { userId } = post;
+const INTERVAL = 30 * 60 * 1000; // 30 mins in ms
 
-    if (!table[userId]) {
-        table[userId] = [];
+const getMSByTimeStamp = (timestamp) => {
+    const time = new Date(timestamp);
+    // console.log(time.getTime());
+    const flooredTime = Math.floor(time.getTime() / INTERVAL) * INTERVAL
+    return flooredTime
+}
+
+// console.log(getMSByTimeStamp('2025-10-22T10:01:00Z'))
+
+const getBinningTime = events.reduce((acc, event) => {
+    // console.log(acc, event);
+
+    const bin = getMSByTimeStamp(event.timestamp);
+
+    if (!acc[bin]) {
+        acc[bin] = { total: 0 };
     }
 
-    table[userId].push(post);
+    acc[bin].total += 1
+    // console.log(acc,bin)
 
-    return table
+    return acc
+
 }, {});
 
-const usersWithPosts = users.map(user => {
-    return {
-        ...user,
-        posts: postByIds[user.id] || []
-    }
-})
-
-// console.log(postByIds)
-
-// console.log(usersWithPosts)
-console.log(JSON.stringify(usersWithPosts));
+console.log(getBinningTime)
