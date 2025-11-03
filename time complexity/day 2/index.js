@@ -242,33 +242,77 @@ const total = cartItems.reduce((subtotal, car) => {
 
 //* Generate a lookup table
 
-//? Input
-const postsArray = [
-    { id: "p-101", title: "Intro to SQL", author: "Alex" },
-    { id: "p-102", title: "Data Structures in JS", author: "Beth" },
-    { id: "p-103", title: "Understanding Reduce", author: "Chris" },
-    { id: "p-104", title: "CSS Grid Tricks", author: "Alex" },
+// //? Input
+// const postsArray = [
+//     { id: "p-101", title: "Intro to SQL", author: "Alex" },
+//     { id: "p-102", title: "Data Structures in JS", author: "Beth" },
+//     { id: "p-103", title: "Understanding Reduce", author: "Chris" },
+//     { id: "p-104", title: "CSS Grid Tricks", author: "Alex" },
+// ];
+
+// //? Output
+// // {
+// //   "p-101": { "id": "p-101", "title": "Intro to SQL", "author": "Alex" },
+// //   "p-102": { "id": "p-102", "title": "Data Structures in JS", "author": "Beth" },
+// //   "p-103": { "id": "p-103", "title": "Understanding Reduce", "author": "Chris" },
+// //   "p-104": { "id": "p-104", "title": "CSS Grid Tricks", "author": "Alex" }
+// // }
+
+
+// const result = postsArray.reduce((final, obj) => {
+//     // console.log(final,obj);
+//     final[obj.id] = obj;
+//     return final
+// }, {});
+// console.log(result);
+
+// let finalArr = [];
+// for (const r in result) {
+//     console.log(r);
+//     finalArr = [...finalArr, result[r]];
+// }
+// console.log(finalArr)
+
+
+
+//* Grouping and Aggregating Data
+
+// Scenario: Count every survey and group by response
+
+//? input
+const surveyResponses = [
+    "A",
+    "C",
+    "B",
+    "A",
+    "B",
+    "B",
+    "C",
+    "A",
+    "B",
+    "D",
+    "A",
+    "C",
+    "B",
+    "A",
 ];
 
 //? Output
-// {
-//   "p-101": { "id": "p-101", "title": "Intro to SQL", "author": "Alex" },
-//   "p-102": { "id": "p-102", "title": "Data Structures in JS", "author": "Beth" },
-//   "p-103": { "id": "p-103", "title": "Understanding Reduce", "author": "Chris" },
-//   "p-104": { "id": "p-104", "title": "CSS Grid Tricks", "author": "Alex" }
-// }
+// { A: 5, C: 3, B: 5, D: 1 }
+
+const responseResult = surveyResponses.reduce((table, response) => {
+    // ? this is more readable
+    // if (table[response]) {
+    //     table[response] = table[response] + 1;
+    // } else {
+    //     table[response] = 1;
+    // };
 
 
-const result = postsArray.reduce((final, obj) => {
-    // console.log(final,obj);
-    final[obj.id] = obj;
-    return final
+    // ! this is short hand method. more clean, but less readable
+    table[response] = (table[response] || 0) + 1;
+
+    return table;
 }, {});
-console.log(result);
 
-let finalArr = [];
-for (const r in result) {
-    console.log(r);
-    finalArr = [...finalArr, result[r]];
-}
-console.log(finalArr)
+console.log(responseResult);
