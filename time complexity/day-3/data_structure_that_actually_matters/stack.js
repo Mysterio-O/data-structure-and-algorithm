@@ -2,6 +2,7 @@
  * * there are two ways to implement stack
  *  ? 1. Array
  *  ? 2. Linked Lists 
+ *  * MAINLY STACK IS LIFO -> LAST IN FIRST OUT
  */
 
 
