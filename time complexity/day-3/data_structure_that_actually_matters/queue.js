@@ -81,8 +81,8 @@ while (check) {
 const dequeueEnd2 = performance.now()
 
 console.log(`Dequeued within ${dequeueEnd2 - dequeueStart2} ms. Queue length is: ${queue.length()}`)
-// ? output
-// *** Dequeued within 0.10300000000279397 ms. Queue length is: 0
+// // ? output
+// // *** Dequeued within 0.10300000000279397 ms. Queue length is: 0
 
 const secondLoop = dequeueEnd2 - dequeueStart2
 
@@ -92,10 +92,10 @@ console.log(`
     first loop took an extra of: ${(dequeueEnd1 - dequeueStart1) - (dequeueEnd2 - dequeueStart2)} ms
      time taken for enqueue: ${enqueuedWithin} ms
     `)
-    
-    //**
-    // ** first loop: 94563.7904 ms
-     // ** second loop: 0.10300000000279397 ms
-    // ** first loop took an extra of: 94563.6874 ms
-     // ** time taken for enqueue: 18.3279 ms
-    // */
+
+//**
+// ** first loop: 94563.7904 ms
+// ** second loop: 0.10300000000279397 ms
+// ** first loop took an extra of: 94563.6874 ms
+// ** time taken for enqueue: 18.3279 ms
+// */
