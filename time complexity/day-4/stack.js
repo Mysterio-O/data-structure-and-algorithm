@@ -56,7 +56,6 @@ const bracketChecker = (str) => {
         } else if (char === ')' || char === '}' || char === ']') {
             /**
              * stack.isEmpty() -> indicates if the stack is already empty or not
-             * stack.pop() !== charList[char] -> defines, if the stack starts with a closing bracket or not
              */
             if (stack.isEmpty()) {
                 console.log('char->', char)
