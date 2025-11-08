@@ -117,12 +117,12 @@ const length = queue.length;
 const dequeueStart1 = performance.now();
 for (let i = 0; i <= length; i++) {
     queue.dequeue();
-    console.log(`dequeued ${i} from queue, length is ${length}`)
-    // ? output:
-    // ! Dequeued within 26336.020299999996 ms. Queue length is: 0
+    // console.log(`dequeued ${i} from queue, length is ${length}`)
 }
 const dequeueEnd1 = performance.now()
 console.log(`Dequeued within ${dequeueEnd1 - dequeueStart1} ms. Queue length is: ${queue.length}`);
+// ? output:
+// ! Dequeued within 26336.020299999996 ms. Queue length is: 0
 
 const firstLoop = dequeueEnd1 - dequeueStart1;
 
